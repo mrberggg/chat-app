@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { getName, getUserId, setName } from './userSlice';
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  TextField,
+} from '@material-ui/core';
+import './Name.scss';
 
 export function EnterName() {
   const dispatch = useDispatch();
@@ -11,19 +19,26 @@ export function EnterName() {
   useEffect(() => {
     dispatch(getName());
     dispatch(getUserId());
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div>
-      <div>
-        <input
+    <Card variant="outlined">
+      <CardContent>
+        <div className="name-label">
+          <label htmlFor="name">Enter your name to begin:</label>
+        </div>
+        <TextField
+          label="Name"
+          id="name"
           onChange={(e) => setNameInput(e.target.value)}
-          placeholder="Name"
+          variant="outlined"
         />
-      </div>
-      <div>
-        <Button onClick={() => dispatch(setName(nameInput))}>Save</Button>
-      </div>
-    </div>
+      </CardContent>
+      <CardActions>
+        <Button color="primary" onClick={() => dispatch(setName(nameInput))}>
+          Save
+        </Button>
+      </CardActions>
+    </Card>
   );
 }

@@ -4,6 +4,7 @@ import socket from 'socket.io-client';
 import { selectId, selectName } from '../name/userSlice';
 import { addChat, initializeChats, selectChats } from './chatSlice';
 import { generateFakeChat } from './fakeMessages';
+import './Chat.scss';
 
 const CHANNEL = 'code-test';
 
@@ -42,7 +43,7 @@ export function Chat() {
 
   useEffect(() => {
     dispatch(initializeChats());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const c = socket.connect('wss://codechallenge.brand.live');
@@ -61,7 +62,7 @@ export function Chat() {
       // Put chat into redux
       dispatch(addChat(message));
     });
-  }, [connection]);
+  }, [connection, dispatch]);
 
   return (
     <div>
