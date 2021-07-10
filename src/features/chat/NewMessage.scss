@@ -1,0 +1,11 @@
+.new-message {
+  display: flex;
+  .message-input {
+    padding: 2px 4px 2px 14px;
+    flex: 1;
+    font-size: 1.3em;
+  }
+  .submit-button {
+    padding: 15px;
+  }
+}

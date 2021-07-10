@@ -13,7 +13,7 @@ export const getUserId = createAsyncThunk('user/getId', async () => {
   let uuid = localStorage.getItem(USER_ID_KEY);
   if (!uuid) {
     uuid = uuidv4();
-    localStorage.setItem(USER_ID_KEY);
+    localStorage.setItem(USER_ID_KEY, uuid);
   }
   return uuid;
 });
@@ -46,6 +46,6 @@ export const userSlice = createSlice({
 });
 
 export const selectName = (state) => state.user.name;
-export const selectId = (state) => state.user.id;
+export const selectUserId = (state) => state.user.id;
 
 export default userSlice.reducer;

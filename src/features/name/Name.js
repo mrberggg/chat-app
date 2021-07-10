@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { getName, getUserId, setName } from './userSlice';
-import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  TextField,
-} from '@material-ui/core';
+import { getName, setName } from './userSlice';
+import { Card, CardActions, CardContent, TextField } from '@material-ui/core';
 import './Name.scss';
 
 export function EnterName() {
@@ -18,7 +12,6 @@ export function EnterName() {
   // Get name from localstorage
   useEffect(() => {
     dispatch(getName());
-    dispatch(getUserId());
   }, [dispatch]);
 
   return (

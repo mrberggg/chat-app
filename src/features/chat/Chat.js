@@ -1,43 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import socket from 'socket.io-client';
-import { selectId, selectName } from '../name/userSlice';
-import { addChat, initializeChats, selectChats } from './chatSlice';
+import { addChat, initializeChats, selectMessages } from './chatSlice';
 import { generateFakeChat } from './fakeMessages';
 import './Chat.scss';
+import { NewMessage } from './NewMessage';
+import { Messages } from './Messages';
 
 const CHANNEL = 'code-test';
 
 export function Chat() {
   const dispatch = useDispatch();
-  const chatBoxRef = useRef();
-  const [chatBox, setChatBox] = useState();
-  const name = useSelector(selectName);
-  const id = useSelector(selectId);
-  const chats = useSelector(selectChats);
+  const messages = useSelector(selectMessages);
   const [connection, setConnection] = useState();
 
-  function emitChat(message) {
+  function emitMessage(message) {
     // Ignore if no text entered
     if (!message) return;
     // Emit message to channel
-    connection.emit(
-      'message',
-      {
-        message,
-        name,
-        id,
-      },
-      CHANNEL
-    );
-    // Reset input
-    chatBoxRef.current.value = '';
+    connection.emit('message', message, CHANNEL);
     // Generate a fake response for demo
-    emitFakeChat();
+    emitFakeMessage();
   }
 
   // For demo purposes, generate a fake response to sent messages
-  function emitFakeChat() {
+  function emitFakeMessage() {
     generateFakeChat((message) => connection.emit('message', message, CHANNEL));
   }
 
@@ -65,21 +52,12 @@ export function Chat() {
   }, [connection, dispatch]);
 
   return (
-    <div>
-      <div>
-        <input
-          onChange={(e) => setChatBox(e.target.value)}
-          placeholder="Enter Chat"
-          ref={chatBoxRef}
-        />
-        <button onClick={() => emitChat(chatBox)}>Submit</button>
-        <ul>
-          {chats.map((c, i) => (
-            <li key={i}>
-              {c.message} by {c.name}
-            </li>
-          ))}
-        </ul>
+    <div className="chat">
+      <div className="messages">
+        <Messages messages={messages} />
+      </div>
+      <div className="new-message">
+        <NewMessage sendMessage={(message) => emitMessage(message)} />
       </div>
     </div>
   );

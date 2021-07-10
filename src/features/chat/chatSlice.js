@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 const STORAGE_KEY = 'chats';
 const TTL = 60 * 60 * 1000; // 1 hour in ms
@@ -23,7 +24,8 @@ export const addChat = createAsyncThunk(
   'chat/add',
   async (newChat, thunkAPI) => {
     const { chat } = thunkAPI.getState();
-    const chats = [...chat.chats, newChat];
+    const chatWithId = { ...newChat, id: uuidv4() };
+    const chats = [...chat.chats, chatWithId];
     const chatsString = JSON.stringify({
       chats,
       ttl: Date.now() + TTL,
@@ -48,6 +50,6 @@ export const chatSlice = createSlice({
 });
 
 export const selectChatLoading = (state) => state.chat.loading;
-export const selectChats = (state) => state.chat.chats;
+export const selectMessages = (state) => state.chat.chats;
 
 export default chatSlice.reducer;

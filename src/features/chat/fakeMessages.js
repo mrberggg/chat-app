@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { lorem, name as fakerName } from 'faker';
 
 const generateFakeUser = () => ({
-  id: uuidv4(),
+  userId: uuidv4(),
   name: fakerName.findName(),
 });
 
@@ -15,10 +15,10 @@ const fakeUsers = [generateFakeUser(), generateFakeUser(), generateFakeUser()];
 
 function generateFakeMessage() {
   // Get a random user from our list
-  const { id, name } = fakeUsers[generateFakeNumber(fakeUsers.length)];
+  const { userId, name } = fakeUsers[generateFakeNumber(fakeUsers.length)];
   const message = lorem.sentence();
   return {
-    id,
+    userId,
     name,
     message,
   };
