@@ -18,3 +18,10 @@
   flex: 1;
   overflow: hidden;
 }
+
+@media (max-width: 700px) {
+  .header {
+    position: inherit;
+    text-align: center;
+  }
+}

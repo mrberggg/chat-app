@@ -6,11 +6,14 @@ import { Chat } from './features/chat/Chat';
 import { EnterName } from './features/name/Name';
 import { getUserId, selectName } from './features/name/userSlice';
 import './App.scss';
+import { useEffect } from 'react';
 
 function App() {
   const dispatch = useDispatch();
   const name = useSelector(selectName);
-  dispatch(getUserId());
+  useEffect(() => {
+    dispatch(getUserId());
+  }, [dispatch]);
   return (
     <div>
       <CssBaseline />
